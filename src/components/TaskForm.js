@@ -1,12 +1,26 @@
 import React, { useState } from 'react';
 import { firestore } from '../firebaseConfig';
+import { collection, addDoc } from 'firebase/firestore';
+import { auth } from '../firebaseConfig';
 
 const TaskForm = ({ addTask }) => {
   const [task, setTask] = useState({ name: '', urgency: 'low', importance: 'low' });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    addTask(task);
+    const user = auth.currentUser;
+    if (user) {
+      try {
+        const taskWithUserId = { ...task, userId: user.uid };
+        const docRef = await addDoc(collection(firestore, 'tasks'), taskWithUserId);
+        console.log("Document written with ID: ", docRef.id);
+        addTask({ ...taskWithUserId, id: docRef.id });
+      } catch (e) {
+        console.error("Error adding document: ", e);
+      }
+    } else {
+      console.error("User not authenticated");
+    }
     setTask({ name: '', urgency: 'low', importance: 'low' });
   };
 
