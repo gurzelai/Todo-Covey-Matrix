@@ -1,25 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import TaskForm from './components/TaskForm';
+import TaskList from './components/TaskList';
+import './styles/App.css';
 
-function App() {
+
+const App = () => {
+  const [tasks, setTasks] = useState([]);
+
+  const addTask = (task) => {
+    setTasks([...tasks, task]);
+  };
+
+  const deleteTask = (taskToDelete) => {
+    setTasks(tasks.filter(task => task !== taskToDelete));
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Todo Covey Matrix</h1>
+      <TaskForm addTask={addTask} />
+      <TaskList tasks={tasks} deleteTask={deleteTask} />
     </div>
   );
-}
+};
 
 export default App;
