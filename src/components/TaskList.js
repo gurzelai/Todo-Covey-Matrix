@@ -1,7 +1,14 @@
 import React from 'react';
 import Task from './Task';
+import { firestore } from '../firebaseConfig';
+import { doc, deleteDoc } from 'firebase/firestore';
 
 const TaskList = ({ tasks, deleteTask }) => {
+  const handleDelete = async (task) => {
+    await deleteDoc(doc(firestore, 'tasks', task.id));
+    deleteTask(task);
+  };
+
   const quadrants = {
     urgentImportant: [],
     notUrgentImportant: [],
@@ -26,25 +33,25 @@ const TaskList = ({ tasks, deleteTask }) => {
       <div className="quadrant">
         <h2>Urgent & Important</h2>
         {quadrants.urgentImportant.map((task, index) => (
-          <Task key={index} task={task} onDelete={deleteTask} />
+          <Task key={index} task={task} onDelete={handleDelete} />
         ))}
       </div>
       <div className="quadrant">
         <h2>Not Urgent & Important</h2>
         {quadrants.notUrgentImportant.map((task, index) => (
-          <Task key={index} task={task} onDelete={deleteTask} />
+          <Task key={index} task={task} onDelete={handleDelete} />
         ))}
       </div>
       <div className="quadrant">
         <h2>Urgent & Not Important</h2>
         {quadrants.urgentNotImportant.map((task, index) => (
-          <Task key={index} task={task} onDelete={deleteTask} />
+          <Task key={index} task={task} onDelete={handleDelete} />
         ))}
       </div>
       <div className="quadrant">
         <h2>Not Urgent & Not Important</h2>
         {quadrants.notUrgentNotImportant.map((task, index) => (
-          <Task key={index} task={task} onDelete={deleteTask} />
+          <Task key={index} task={task} onDelete={handleDelete} />
         ))}
       </div>
     </div>
