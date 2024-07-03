@@ -19,7 +19,9 @@ const TaskForm = ({ addTask }) => {
         console.error("Error adding document: ", e);
       }
     } else {
-      console.error("User not authenticated");
+      // Si el usuario no está autenticado, agrega la tarea localmente con un ID único
+      const localTask = { ...task, id: Date.now().toString() }; // Generar ID único con timestamp
+      addTask(localTask);
     }
     setTask({ name: '', urgency: 'low', importance: 'low' });
   };
