@@ -56,7 +56,7 @@ const App = () => {
 
   return (
     <div className="App">
-      <h1>Todo Covey Matrix</h1>
+      <h1>Tareas Covey Matrix</h1>
       {user ? (
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'right' }}>
           <img src={user.photoURL} alt="Profile" style={{ width: '50px', height: '50px', borderRadius: '50%' }} />

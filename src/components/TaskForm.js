@@ -32,7 +32,7 @@ const TaskForm = ({ addTask }) => {
         type="text"
         value={task.name}
         onChange={(e) => setTask({ ...task, name: e.target.value })}
-        placeholder="Task name"
+        placeholder="Tarea"
         maxLength="75"
         required
       />
@@ -40,17 +40,17 @@ const TaskForm = ({ addTask }) => {
         value={task.urgency}
         onChange={(e) => setTask({ ...task, urgency: e.target.value })}
       >
-        <option value="low">Low Urgency</option>
-        <option value="high">High Urgency</option>
+        <option value="low">Baja Urgencia</option>
+        <option value="high">Alta Urgencia</option>
       </select>
       <select
         value={task.importance}
         onChange={(e) => setTask({ ...task, importance: e.target.value })}
       >
-        <option value="low">Low Importance</option>
-        <option value="high">High Importance</option>
+        <option value="low">Baja Importancia</option>
+        <option value="high">Alta Importancia</option>
       </select>
-      <button type="submit">Add Task</button>
+      <button type="submit">Añadir</button>
     </form>
   );
 };

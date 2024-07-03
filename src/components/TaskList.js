@@ -10,47 +10,47 @@ const TaskList = ({ tasks, deleteTask }) => {
   };
 
   const quadrants = {
-    urgentImportant: [],
-    notUrgentImportant: [],
-    urgentNotImportant: [],
-    notUrgentNotImportant: []
+    urgenteImportante: [],
+    notUrgenteImportante: [],
+    urgenteNoImportante: [],
+    notUrgenteNoImportante: []
   };
 
   tasks.forEach(task => {
     if (task.urgency === 'high' && task.importance === 'high') {
-      quadrants.urgentImportant.push(task);
+      quadrants.urgenteImportante.push(task);
     } else if (task.urgency === 'low' && task.importance === 'high') {
-      quadrants.notUrgentImportant.push(task);
+      quadrants.notUrgenteImportante.push(task);
     } else if (task.urgency === 'high' && task.importance === 'low') {
-      quadrants.urgentNotImportant.push(task);
+      quadrants.urgenteNoImportante.push(task);
     } else {
-      quadrants.notUrgentNotImportant.push(task);
+      quadrants.notUrgenteNoImportante.push(task);
     }
   });
 
   return (
     <div className="matrix">
       <div className="quadrant">
-        <h2>Urgent & Important</h2>
-        {quadrants.urgentImportant.map((task, index) => (
+        <h2>Urgente e Importante</h2>
+        {quadrants.urgenteImportante.map((task, index) => (
           <Task key={index} task={task} onDelete={handleDelete} />
         ))}
       </div>
       <div className="quadrant">
-        <h2>Not Urgent & Important</h2>
-        {quadrants.notUrgentImportant.map((task, index) => (
+        <h2>No Urgente e Importante</h2>
+        {quadrants.notUrgenteImportante.map((task, index) => (
           <Task key={index} task={task} onDelete={handleDelete} />
         ))}
       </div>
       <div className="quadrant">
-        <h2>Urgent & Not Important</h2>
-        {quadrants.urgentNotImportant.map((task, index) => (
+        <h2>Urgente e No Importante</h2>
+        {quadrants.urgenteNoImportante.map((task, index) => (
           <Task key={index} task={task} onDelete={handleDelete} />
         ))}
       </div>
       <div className="quadrant">
-        <h2>Not Urgent & Not Important</h2>
-        {quadrants.notUrgentNotImportant.map((task, index) => (
+        <h2>No Urgente e No Importante</h2>
+        {quadrants.notUrgenteNoImportante.map((task, index) => (
           <Task key={index} task={task} onDelete={handleDelete} />
         ))}
       </div>
