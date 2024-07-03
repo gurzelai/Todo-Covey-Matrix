@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { firestore } from '../firebaseConfig';
 
 const TaskForm = ({ addTask }) => {
   const [task, setTask] = useState({ name: '', urgency: 'low', importance: 'low' });

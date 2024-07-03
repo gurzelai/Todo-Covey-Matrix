@@ -46,3 +46,21 @@ form select,
 form button {
   margin-right: 10px;
 }
+
+.logout-button {
+  background-color: #f0f0f0; /* Color de fondo más suave */
+  color: #333; /* Color de texto oscuro */
+  border: 1px solid #ccc; /* Borde delgado */
+  margin: 5px;
+  padding: 4px 16px; /* Espaciado interno */
+  cursor: pointer; /* Cursor de apuntador */
+  border-radius: 4px; /* Bordes redondeados */
+  outline: none; /* Quitar el contorno al enfocar */
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s; /* Transiciones suaves */
+}
+
+.logout-button:hover {
+  background-color: #e0e0e0; /* Color de fondo al pasar el mouse */
+  color: #222; /* Color de texto más oscuro al pasar el mouse */
+  border-color: #bbb; /* Cambiar color del borde al pasar el mouse */
+}
