@@ -30,30 +30,30 @@ const TaskList = ({ tasks, deleteTask }) => {
 
   return (
     <div className="matrix">
-      <div className="quadrant">
-        <h2>Urgente e Importante</h2>
-        {quadrants.urgenteImportante.map((task, index) => (
-          <Task key={index} task={task} onDelete={handleDelete} />
-        ))}
-      </div>
-      <div className="quadrant">
-        <h2>No Urgente e Importante</h2>
-        {quadrants.notUrgenteImportante.map((task, index) => (
-          <Task key={index} task={task} onDelete={handleDelete} />
-        ))}
-      </div>
-      <div className="quadrant">
-        <h2>Urgente e No Importante</h2>
-        {quadrants.urgenteNoImportante.map((task, index) => (
-          <Task key={index} task={task} onDelete={handleDelete} />
-        ))}
-      </div>
-      <div className="quadrant">
-        <h2>No Urgente e No Importante</h2>
-        {quadrants.notUrgenteNoImportante.map((task, index) => (
-          <Task key={index} task={task} onDelete={handleDelete} />
-        ))}
-      </div>
+        <div className="quadrant">
+          <h2>Urgente e importante</h2>
+          {quadrants.urgenteImportante.map((task, index) => (
+            <Task key={index} task={task} onDelete={handleDelete} />
+          ))}
+        </div>
+        <div className="quadrant">
+          <h2>No Urgente e importante</h2>
+          {quadrants.notUrgenteImportante.map((task, index) => (
+            <Task key={index} task={task} onDelete={handleDelete} />
+          ))}
+        </div>
+        <div className="quadrant">
+          <h2>Urgente y no importante</h2>
+          {quadrants.urgenteNoImportante.map((task, index) => (
+            <Task key={index} task={task} onDelete={handleDelete} />
+          ))}
+        </div>
+        <div className="quadrant">
+          <h2>No urgente e no importante</h2>
+          {quadrants.notUrgenteNoImportante.map((task, index) => (
+            <Task key={index} task={task} onDelete={handleDelete} />
+          ))}
+        </div>
     </div>
   );
 };

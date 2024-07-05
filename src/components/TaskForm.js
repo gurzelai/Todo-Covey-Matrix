@@ -2,9 +2,12 @@ import React, { useState } from 'react';
 import { firestore } from '../firebaseConfig';
 import { collection, addDoc } from 'firebase/firestore';
 import { auth } from '../firebaseConfig';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import './TaskForm.css'; // Importa los estilos CSS
 
 const TaskForm = ({ addTask }) => {
-  const [task, setTask] = useState({ name: '', urgency: 'low', importance: 'low' });
+  const [task, setTask] = useState({ name: '', urgency: 'low', importance: 'low', dueDate: null });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,11 +26,11 @@ const TaskForm = ({ addTask }) => {
       const localTask = { ...task, id: Date.now().toString() }; // Generar ID único con timestamp
       addTask(localTask);
     }
-    setTask({ name: '', urgency: 'low', importance: 'low' });
+    setTask({ name: '', urgency: 'low', importance: 'low', dueDate: null });
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className="task-form" onSubmit={handleSubmit}>
       <input
         type="text"
         value={task.name}
@@ -50,6 +53,12 @@ const TaskForm = ({ addTask }) => {
         <option value="low">Baja Importancia</option>
         <option value="high">Alta Importancia</option>
       </select>
+      <DatePicker
+        selected={task.dueDate}
+        onChange={(date) => setTask({ ...task, dueDate: date })}
+        dateFormat="dd/MM/yyyy"
+        placeholderText="Fecha de vencimiento"
+      />
       <button type="submit">Añadir</button>
     </form>
   );

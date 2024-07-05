@@ -1,0 +1,26 @@
+.task-form {
+    display: flex;
+    flex-direction: row; /* Colocar los elementos en una fila */
+    gap: 10px;
+    max-width: 100%; /* Ajusta este valor según tus necesidades */
+    margin: 0 auto; /* Centrar el formulario horizontalmente */
+    align-items: center; /* Alinear los elementos verticalmente */
+    justify-content: center; /* Centrar los elementos horizontalmente */
+    padding: 20px; /* Añadir padding para espaciado interno */
+    border-radius: 10px; /* Añadir esquinas redondeadas */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Añadir una sombra ligera */
+    background-color: #fff; /* Fondo blanco */
+  }
+  
+  .task-form input,
+  .task-form select,
+  .task-form .react-datepicker-wrapper {
+    box-sizing: border-box;
+  }
+
+  .task-form button {
+    padding: 10px 20px; /* Añadir padding al botón */
+    border: none; /* Quitar borde predeterminado */
+    border-radius: 5px; /* Bordes redondeados del botón */
+    cursor: pointer; /* Cambiar el cursor al pasar sobre el botón */
+  }  
