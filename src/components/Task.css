@@ -1,0 +1,52 @@
+.task {
+  display: flex;
+  flex-direction: column;
+  background-color: #f9f9f9;
+  margin: 5px;
+  padding: 10px;
+  border-radius: 5px;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.task-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+.task p {
+  margin: 0;
+}
+
+.task button {
+  align-self: flex-end;
+  padding: 5px 10px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.task button {
+  background-color: #ff6347;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.task button:hover {
+  background-color: #ff4500;
+}
+
+.task-overdue {
+  background-color: #ffe6e6;
+}
+
+.overdue-date {
+  font-weight: bold;
+  color: red;
+}

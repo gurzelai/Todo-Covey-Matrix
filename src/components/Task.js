@@ -1,4 +1,5 @@
 import React from 'react';
+import './Task.css'
 
 // Función para formatear la fecha
 const formatDate = (date) => {
@@ -19,11 +20,23 @@ const formatDate = (date) => {
 };
 
 const Task = ({ task, onDelete }) => {
-  return (
-    <div className="task">
-      <p>{task.name}</p>
-      <p>{task.dueDate ? `${formatDate(task.dueDate)}` : ''}</p>
-      <button onClick={() => onDelete(task)}>Complete</button>
+
+  const isDueDatePassedOrToday = () => {
+    if (!task.dueDate) return false;
+    const dueDate = new Date(task.dueDate.seconds * 1000);
+    const today = new Date();
+    return dueDate < today || dueDate.toDateString() === today.toDateString();
+  };
+
+ return (
+    <div className={`task ${isDueDatePassedOrToday() ? 'task-overdue' : ''}`}>
+      <div className="task-info">
+        <p>{task.name}</p>
+        <button onClick={() => onDelete(task)}>Completo</button>
+      </div>
+      <p className={`due-date ${isDueDatePassedOrToday() ? 'overdue-date' : ''}`}>
+        {task.dueDate ? `${formatDate(task.dueDate)}` : ''}
+      </p>
     </div>
   );
 };
