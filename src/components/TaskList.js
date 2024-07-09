@@ -3,7 +3,7 @@ import Task from './Task';
 import { deleteTaskFromFirestore, updateTaskInFirestore } from '../services/firestoreService';
 import { useDrop } from 'react-dnd';
 
-const Quadrant = ({ title, tasks, onDrop, deleteTask}) => {
+const Quadrant = ({ title, tasks, onDrop, deleteTask, updateTask}) => {
 
   const handleDelete = async (task) => {
     try {
@@ -26,7 +26,7 @@ const Quadrant = ({ title, tasks, onDrop, deleteTask}) => {
     <div ref={drop} className={`quadrant ${isOver ? 'highlight' : ''}`}>
       <h2>{title}</h2>
       {tasks.map((task, index) => (
-        <Task key={index} task={task} onDelete={handleDelete}/>
+        <Task key={index} task={task} onDelete={handleDelete} updateTask={updateTask}/>
       ))}
     </div>
   );
@@ -67,24 +67,28 @@ const TaskList = ({ tasks, deleteTask, updateTask }) => {
         tasks={quadrants.urgenteImportante}
         onDrop={(task) => handleDrop(task, 'high', 'high')}
         deleteTask={deleteTask}
+        updateTask={updateTask}
       />
       <Quadrant
         title="No Urgente e importante"
         tasks={quadrants.notUrgenteImportante}
         onDrop={(task) => handleDrop(task, 'low', 'high')}
         deleteTask={deleteTask}
+        updateTask={updateTask}
       />
       <Quadrant
         title="Urgente y no importante"
         tasks={quadrants.urgenteNoImportante}
         onDrop={(task) => handleDrop(task, 'high', 'low')}
         deleteTask={deleteTask}
+        updateTask={updateTask}
       />
       <Quadrant
         title="No urgente e no importante"
         tasks={quadrants.notUrgenteNoImportante}
         onDrop={(task) => handleDrop(task, 'low', 'low')}
         deleteTask={deleteTask}
+        updateTask={updateTask}
       />
     </div>
   );

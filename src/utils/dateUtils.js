@@ -16,3 +16,14 @@ export const formatDate = (date) => {
     return '';
   };
   
+
+// Función para convertir una fecha a timestamp
+export const convertToTimestamp = (date) => {
+  if (!(date instanceof Date)) return null;
+
+  const seconds = Math.floor(date.getTime() / 1000);
+  return {
+    seconds,
+    nanoseconds: 0
+  };
+};
