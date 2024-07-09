@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import { firestore } from '../firebaseConfig';
-import { collection, addDoc } from 'firebase/firestore';
-import { auth } from '../firebaseConfig';
+import { addTaskToFirestore } from '../services/firestoreService';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import './TaskForm.css'; // Importa los estilos CSS
@@ -11,20 +9,11 @@ const TaskForm = ({ addTask }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const user = auth.currentUser;
-    if (user) {
-      try {
-        const taskWithUserId = { ...task, userId: user.uid };
-        const docRef = await addDoc(collection(firestore, 'tasks'), taskWithUserId);
-        console.log("Document written with ID: ", docRef.id);
-        addTask({ ...taskWithUserId, id: docRef.id });
-      } catch (e) {
-        console.error("Error adding document: ", e);
-      }
-    } else {
-      // Si el usuario no está autenticado, agrega la tarea localmente con un ID único
-      const localTask = { ...task, id: Date.now().toString() }; // Generar ID único con timestamp
-      addTask(localTask);
+    try {
+      const taskWithId = await addTaskToFirestore(task);
+      addTask(taskWithId);
+    } catch (e) {
+      console.error("Error adding document: ", e);
     }
     setTask({ name: '', urgency: 'low', importance: 'low', dueDate: null });
   };
