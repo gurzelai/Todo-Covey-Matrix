@@ -6,9 +6,10 @@ const Task = ({ task, onDelete }) => {
 
   const isDueDatePassedOrToday = () => {
     if (!task.dueDate) return false;
-    const dueDate = new Date(task.dueDate.seconds * 1000);
+    const dueDate = task.dueDate instanceof Date ? task.dueDate : new Date(task.dueDate.seconds * 1000);
     const today = new Date();
-    return dueDate < today || dueDate.toDateString() === today.toDateString();
+
+    return dueDate.setHours(0, 0, 0, 0) <= today.setHours(0, 0, 0, 0);
   };
 
   return (
