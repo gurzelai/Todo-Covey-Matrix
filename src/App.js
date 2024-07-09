@@ -26,7 +26,7 @@ const App = () => {
   }, []);
 
   const addTask = (task) => {
-    setTasks([...tasks, task]);
+    setTasks(prevTasks => [...prevTasks, task].sort((a, b) => a.createdAt - b.createdAt));
   };
 
   const deleteTask = (taskToDelete) => {
