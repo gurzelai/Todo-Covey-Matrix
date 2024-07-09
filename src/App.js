@@ -7,6 +7,8 @@ import { auth } from './firebaseConfig';
 import { onAuthStateChanged } from "firebase/auth";
 import { fetchTasksForUser } from './services/firestoreService';
 import { signInWithGoogle, signOut } from './services/authService';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
 const App = () => {
   const [tasks, setTasks] = useState([]);
@@ -33,17 +35,23 @@ const App = () => {
     setTasks(tasks.filter(task => task.id !== taskToDelete.id));
   };
 
+  const updateTask = (updatedTask) => {
+    setTasks(tasks.map(task => (task.id === updatedTask.id ? updatedTask : task)));
+  };
+
   return (
-    <div className="App">
-      <h1>Tareas Covey Matrix</h1>
-      {user ? (
-        <UserProfile user={user} onSignOut={signOut} />
-      ) : (
-        <button onClick={signInWithGoogle} style={{ marginBottom: '5px' }}>Iniciar sesión con Google</button>
-      )}
-      <TaskForm addTask={addTask} />
-      <TaskList tasks={tasks} deleteTask={deleteTask} />
-    </div>
+    <DndProvider backend={HTML5Backend}>
+      <div className="App">
+        <h1>Tareas Covey Matrix</h1>
+        {user ? (
+          <UserProfile user={user} onSignOut={signOut} />
+        ) : (
+          <button onClick={signInWithGoogle} style={{ marginBottom: '5px' }}>Iniciar sesión con Google</button>
+        )}
+        <TaskForm addTask={addTask} />
+        <TaskList tasks={tasks} deleteTask={deleteTask} updateTask={updateTask} />
+      </div>
+    </DndProvider>
   );
 };
 

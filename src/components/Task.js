@@ -1,8 +1,16 @@
 import React from 'react';
 import { formatDate } from '../utils/dateUtils';
 import './Task.css';
+import { useDrag } from 'react-dnd';
 
 const Task = ({ task, onDelete }) => {
+  const [{ isDragging }, drag] = useDrag({
+    type: 'TASK',
+    item: task,
+    collect: monitor => ({
+      isDragging: monitor.isDragging(),
+    }),
+  });
 
   const isDueDatePassedOrToday = () => {
     if (!task.dueDate) return false;
@@ -13,7 +21,7 @@ const Task = ({ task, onDelete }) => {
   };
 
   return (
-    <div className={`task ${isDueDatePassedOrToday() ? 'task-overdue' : ''}`}>
+    <div ref={drag} className={`task ${isDragging ? 'dragging' : ''} ${isDueDatePassedOrToday() ? 'task-overdue' : ''}`}>
       <div className="task-info">
         <p>{task.name}</p>
         <button onClick={() => onDelete(task)}>Completo</button>
