@@ -1,4 +1,4 @@
-import { collection, getDocs, query, where, doc, deleteDoc, addDoc, serverTimestamp, orderBy } from 'firebase/firestore';
+import { collection, getDocs, query, where, doc, deleteDoc, addDoc, serverTimestamp, orderBy, updateDoc } from 'firebase/firestore';
 import { firestore } from '../firebaseConfig';
 import { auth } from '../firebaseConfig';
 
@@ -18,6 +18,11 @@ export const addTaskToFirestore = async (task) => {
     const localTask = { ...task, id: Date.now().toString(), createdAt: new Date() }; // Generar ID único con timestamp
     return localTask;
   }
+};
+
+export const updateTaskInFirestore = async (taskId, updatedFields) => {
+  const taskRef = doc(firestore, 'tasks', taskId);
+  await updateDoc(taskRef, updatedFields);
 };
 
 export const deleteTaskFromFirestore = async (taskId) => {

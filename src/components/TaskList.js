@@ -1,6 +1,6 @@
 import React from 'react';
 import Task from './Task';
-import { deleteTaskFromFirestore } from '../services/firestoreService';
+import { deleteTaskFromFirestore, updateTaskInFirestore } from '../services/firestoreService';
 import { useDrop } from 'react-dnd';
 
 const Quadrant = ({ title, tasks, onDrop, deleteTask}) => {
@@ -34,7 +34,10 @@ const Quadrant = ({ title, tasks, onDrop, deleteTask}) => {
 
 const TaskList = ({ tasks, deleteTask, updateTask }) => {
   
-  const handleDrop = (task, urgency, importance) => {
+  const handleDrop = async (task, urgency, importance) => {
+    task.urgency = urgency;
+    task.importance = importance;
+    await updateTaskInFirestore(task.id, { urgency, importance });
     updateTask({ ...task, urgency, importance });
   };
 
