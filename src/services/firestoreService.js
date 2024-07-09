@@ -25,6 +25,15 @@ export const updateTaskInFirestore = async (taskId, updatedFields) => {
   await updateDoc(taskRef, updatedFields);
 };
 
+// TODO
+// export const updateTaskInFirestore = async (taskId, updatedTask) => {
+//   try {
+//     await firestore.collection('tasks').doc(taskId).update(updatedTask);
+//   } catch (error) {
+//     console.error("Error updating task: ", error);
+//   }
+// };
+
 export const deleteTaskFromFirestore = async (taskId) => {
   await deleteDoc(doc(firestore, 'tasks', taskId));
 };
