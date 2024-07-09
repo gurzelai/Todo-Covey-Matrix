@@ -1,8 +1,10 @@
 import React from 'react';
 import Task from './Task';
 import { deleteTaskFromFirestore } from '../services/firestoreService';
+import { useDrop } from 'react-dnd';
 
-const TaskList = ({ tasks, deleteTask }) => {
+const Quadrant = ({ title, tasks, onDrop, deleteTask}) => {
+
   const handleDelete = async (task) => {
     try {
       await deleteTaskFromFirestore(task.id);
@@ -10,6 +12,30 @@ const TaskList = ({ tasks, deleteTask }) => {
     } catch (e) {
       console.error("Error deleting document: ", e);
     }
+  };
+  
+  const [{ isOver }, drop] = useDrop({
+    accept: 'TASK',
+    drop: onDrop,
+    collect: monitor => ({
+      isOver: monitor.isOver(),
+    }),
+  });
+
+  return (
+    <div ref={drop} className={`quadrant ${isOver ? 'highlight' : ''}`}>
+      <h2>{title}</h2>
+      {tasks.map((task, index) => (
+        <Task key={index} task={task} onDelete={handleDelete}/>
+      ))}
+    </div>
+  );
+};
+
+const TaskList = ({ tasks, deleteTask, updateTask }) => {
+  
+  const handleDrop = (task, urgency, importance) => {
+    updateTask({ ...task, urgency, importance });
   };
 
   const quadrants = {
@@ -33,30 +59,30 @@ const TaskList = ({ tasks, deleteTask }) => {
 
   return (
     <div className="matrix">
-      <div className="quadrant">
-        <h2>Urgente e importante</h2>
-        {quadrants.urgenteImportante.map((task, index) => (
-          <Task key={index} task={task} onDelete={handleDelete} />
-        ))}
-      </div>
-      <div className="quadrant">
-        <h2>No Urgente e importante</h2>
-        {quadrants.notUrgenteImportante.map((task, index) => (
-          <Task key={index} task={task} onDelete={handleDelete} />
-        ))}
-      </div>
-      <div className="quadrant">
-        <h2>Urgente y no importante</h2>
-        {quadrants.urgenteNoImportante.map((task, index) => (
-          <Task key={index} task={task} onDelete={handleDelete} />
-        ))}
-      </div>
-      <div className="quadrant">
-        <h2>No urgente e no importante</h2>
-        {quadrants.notUrgenteNoImportante.map((task, index) => (
-          <Task key={index} task={task} onDelete={handleDelete} />
-        ))}
-      </div>
+      <Quadrant
+        title="Urgente e importante"
+        tasks={quadrants.urgenteImportante}
+        onDrop={(task) => handleDrop(task, 'high', 'high')}
+        deleteTask={deleteTask}
+      />
+      <Quadrant
+        title="No Urgente e importante"
+        tasks={quadrants.notUrgenteImportante}
+        onDrop={(task) => handleDrop(task, 'low', 'high')}
+        deleteTask={deleteTask}
+      />
+      <Quadrant
+        title="Urgente y no importante"
+        tasks={quadrants.urgenteNoImportante}
+        onDrop={(task) => handleDrop(task, 'high', 'low')}
+        deleteTask={deleteTask}
+      />
+      <Quadrant
+        title="No urgente e no importante"
+        tasks={quadrants.notUrgenteNoImportante}
+        onDrop={(task) => handleDrop(task, 'low', 'low')}
+        deleteTask={deleteTask}
+      />
     </div>
   );
 };

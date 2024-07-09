@@ -41,3 +41,11 @@ form button {
   color: #222; /* Color de texto más oscuro al pasar el mouse */
   border-color: #bbb; /* Cambiar color del borde al pasar el mouse */
 }
+
+.task.dragging {
+  opacity: 0.5;
+}
+
+.quadrant.highlight {
+  background-color: #e0e0e0;
+}
