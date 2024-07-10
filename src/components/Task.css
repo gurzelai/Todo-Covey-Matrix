@@ -12,21 +12,26 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
 }
 
+.task-info p:first-child {
+  flex: 1;
+  min-width: 0; /* Asegura que no expanda más allá del contenedor */
+  margin-right: 10px; /* Espacio entre el nombre y la fecha */
+  text-align: left;
+}
+
+.task-info p.due-date {
+  flex-shrink: 0; /* La fecha no debe encoger */
+  margin-right: 10px; /* Espacio entre la fecha y los botones */
+}
 
 .task p {
   margin: 0;
-}
-
-.task button {
-  align-self: flex-end;
-  padding: 5px 10px;
-  border: none;
-  background-color: #007bff;
-  color: white;
-  border-radius: 5px;
-  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .task button {

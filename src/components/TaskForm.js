@@ -3,6 +3,7 @@ import { addTaskToFirestore } from '../services/firestoreService';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import './TaskForm.css'; // Importa los estilos CSS
+import { convertToTimestamp } from '../utils/dateUtils';
 
 const TaskForm = ({ addTask }) => {
   const [task, setTask] = useState({ name: '', urgency: 'low', importance: 'low', dueDate: null });
@@ -11,6 +12,7 @@ const TaskForm = ({ addTask }) => {
     e.preventDefault();
     try {
       const taskWithId = await addTaskToFirestore(task);
+      taskWithId.dueDate = convertToTimestamp(taskWithId.dueDate)
       addTask(taskWithId);
     } catch (e) {
       console.error("Error adding document: ", e);
