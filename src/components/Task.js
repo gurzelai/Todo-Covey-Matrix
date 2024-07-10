@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { formatDate, convertToTimestamp } from '../utils/dateUtils';
 import './Task.css';
 import { useDrag } from 'react-dnd';
@@ -44,6 +44,15 @@ const Task = ({ task, onDelete, updateTask }) => {
     setIsEditing(false);
   };
 
+  const taskNameRef = useRef(null); // tooltip
+  useEffect(() => {
+    const taskNameElement = taskNameRef.current;
+    if (taskNameElement) {
+      const isTextOverflowing = taskNameElement.scrollWidth > taskNameElement.clientWidth;
+      taskNameElement.title = isTextOverflowing ? task.name : '';
+    }
+  }, [task.name]);
+
   return (
     <div ref={drag} className={`task ${isDragging ? 'dragging' : ''} ${isDueDatePassedOrToday() ? 'task-overdue' : ''}`}>
       <div className="task-info">
@@ -59,7 +68,7 @@ const Task = ({ task, onDelete, updateTask }) => {
           </>
         ) : (
           <>
-            <p>{task.name}</p>
+            <p ref={taskNameRef}>{task.name}</p>
             <p className={`due-date ${isDueDatePassedOrToday() ? 'overdue-date' : ''}`}>
               {task.dueDate ? `${formatDate(task.dueDate)}` : ''}
             </p>
