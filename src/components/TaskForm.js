@@ -8,10 +8,38 @@ import { convertToTimestamp } from '../utils/dateUtils';
 const TaskForm = ({ addTask }) => {
   const [task, setTask] = useState({ name: '', urgency: 'low', importance: 'low', dueDate: null });
 
+  const addEventToGoogleCalendar = (task, token) => {
+    const event = {
+      summary: task.name,
+      description: `Urgency: ${task.urgency}, Importance: ${task.importance}`,
+      start: {
+        dateTime: task.dueDate.toISOString(),
+        timeZone: 'America/Los_Angeles',
+      },
+      end: {
+        dateTime: task.dueDate.toISOString(),
+        timeZone: 'America/Los_Angeles',
+      },
+    };
+    fetch('https://www.googleapis.com/calendar/v3/calendars/primary/events', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(event),
+    })
+      .then(response => response.json())
+      .catch(error => {
+        console.error('Error creating event:', error);
+      });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const taskWithId = await addTaskToFirestore(task);
+      addEventToGoogleCalendar(task, localStorage.getItem('token'));
       taskWithId.dueDate = convertToTimestamp(taskWithId.dueDate)
       addTask(taskWithId);
     } catch (e) {

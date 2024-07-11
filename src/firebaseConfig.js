@@ -25,6 +25,6 @@ const analytics = getAnalytics(app);
 const auth = getAuth(app)
 auth.useDeviceLanguage();
 const provider = new GoogleAuthProvider();
-provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
+provider.addScope('https://www.googleapis.com/auth/calendar');
 const firestore = getFirestore(app);
 export {provider, auth, analytics, firestore };
