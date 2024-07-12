@@ -42,7 +42,7 @@ const App = () => {
   return (
     <DndProvider backend={HTML5Backend}>
       <div className="App">
-        <h1>Tareas Covey Matrix</h1>
+        <h1 style={{ margin: '5px 0px 0px 0px' }}>Tareas Covey Matrix</h1>
         {user ? (
           <UserProfile user={user} onSignOut={signOut} />
         ) : (
